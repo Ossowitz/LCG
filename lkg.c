@@ -6,7 +6,7 @@
  */
 
 #include <stdio.h>
-#include "../repository/parse_command.h"
+#include "repository/parse_command.h"
 
 #define EXCEPTION           "\033[1;31m%s\033[0m\n"
 #define STATELESS           "\033[1;32m%s\033[0m\n"
