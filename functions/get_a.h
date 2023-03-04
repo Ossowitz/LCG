@@ -36,7 +36,7 @@ bool isPrime(long long n) {
 
 /**
  * @param: m - numeric
- * @note:  Find the minimum a such that a-1 is divisible by all prime divisors of m.\note
+ * @brief: Find the minimum a such that a-1 is divisible by all prime divisors of m.\note
  *          If m is divisible by 4 then a-1 is divisible by 4;
  */
 void get_a(long long m) {
