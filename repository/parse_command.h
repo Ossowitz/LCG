@@ -38,7 +38,7 @@ long long isPositiveNumber(const char *str) {
 }
 
 /**
- * @note: Function for throwing an exception associated with a file opening error.
+ * @brief: Function for throwing an exception associated with a file opening error.
  */
 void incorrectCommand() {
     FILE *file = fopen(OUTPUT_FILE, "w");
@@ -55,7 +55,7 @@ void incorrectCommand() {
 }
 
 /**
- * note: A function to throw an exception if no solution is found.
+ * @brief: A function to throw an exception if no solution is found.
  */
 void throwException() {
     FILE *file = fopen("output.txt", "w");
@@ -89,7 +89,7 @@ bool checkPositive(long long *array, size_t size) {
  * @param: x0 - numeric
  * @param: m  - numeric
  * @note:  0 <= a,x0,c,m,n      a,x0,c < m
- * @note:  This function is needed to validate input parameters.
+ * @brief: This function is needed to validate input parameters.
  */
 void checkCompatibility(long long n, long long a, long long c, long long x0, long long m) {
     if (n == 0 || a >= m || c >= m || x0 >= m) {
@@ -108,7 +108,7 @@ void checkCompatibility(long long n, long long a, long long c, long long x0, lon
 
 /**
  * @param: command - Command that separates arguments
- * @note:  The call of a specific function depends on the value of the command.
+ * @brief: The call of a specific function depends on the value of the command.
  */
 void parseCommand(char *command) {
     char *token = strtok(command, " ");

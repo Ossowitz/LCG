@@ -15,7 +15,7 @@
 #define FILE_OPENED         "+ FILE OPENED +"
 
 /**
- * @note: Depending on the choice of command, uncomment the specific line.
+ * @brief: Depending on the choice of command, uncomment the specific line.
  */
 //#define INPUT_FILE          "repository/input_get_c.txt"
 //#define INPUT_FILE          "repository/input_get_a.txt"
