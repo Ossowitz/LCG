@@ -144,13 +144,6 @@ void writeChiSquareResult(double squareTest) {
 /**
  * @param: sequence - numeric array
  * @param: length   - length of array
- * @note:  {
- *               The principle of testing the generated sequence for randomness
- *                   using the Donald Knuth permutation criterion is as follows:
- *
- *               1.
- *
- *         }
  * @see: https://github.com/Ossowitz/LCG#readme
  */
 void checkRandomness(long long sequence[], long long length) {

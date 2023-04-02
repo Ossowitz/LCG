@@ -6,7 +6,6 @@
  */
 
 #include <stdio.h>
-
 #include "../repository/parse_command.h"
 
 #define EXCEPTION           "\033[1;31m%s\033[0m\n"
