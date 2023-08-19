@@ -7,7 +7,7 @@
 
 #define COMMAND_NOT_FOUND_EXCEPTION "incorrect command"
 #define OPEN_FILE_EXCEPTION         "+ OPEN_FILE_EXCEPTION +"
-#define EQUALS_ZERO_EXCEPTION       "no solution"
+#define NO_SOLUTION_EXCEPTION       "no solution"
 
 #define OUTPUT_FILE "output.txt"
 
@@ -63,14 +63,14 @@ bool checkPositive(int *array, size_t size) {
     return true;
 }
 
-void throwEqualsZeroException(int i) {
-    if (i == 0) {
+void checkCompatibility(int n, int a, int c, int x0, int m) {
+    if (n == 0 || a >= m || c >= m || x0 >= m) {
         FILE *file = fopen("output.txt", "w");
         printf(EXCEPTION,
-               EQUALS_ZERO_EXCEPTION
+               NO_SOLUTION_EXCEPTION
         );
         fprintf(file,
-                EQUALS_ZERO_EXCEPTION
+                NO_SOLUTION_EXCEPTION
         );
         fclose(file);
     } else {
@@ -179,7 +179,7 @@ void parseCommand(char *command) {
             token = strtok(NULL, " ");
         }
 
-        throwEqualsZeroException(n);
+        checkCompatibility(n, a, c, x0, m);
 
         int array[] = {a, x0, c, m, n};
         size_t size = sizeof(array) / sizeof(array[0]);
