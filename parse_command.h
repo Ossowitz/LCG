@@ -88,12 +88,12 @@ void parse_command(char *command) {
             token = strtok(NULL, " ");
         }
 
-        int array[3] = {cmin, cmax, m};
+        int array[] = {cmin, cmax, m};
         size_t size = sizeof(array) / sizeof(array[0]);
 
-        bool positive = check_positive(array, size);
+        bool checkPositive = check_positive(array, size);
 
-        if (positive) {
+        if (checkPositive) {
             printf("cmin=%d\ncmax=%d\nm=%d\n", cmin, cmax, m);
         } else {
             throw_exception();
@@ -105,12 +105,26 @@ void parse_command(char *command) {
          */
 //        get_c(cmin, cmax, m);
     else if (strcmp(token, "get_a") == 0) {
-        int m;
+        int m = -1;
         while (token != NULL) {
-            token = strtok(NULL, " ");
             if (strncmp(token, "m=", 2) == 0) {
+                if (!is_positive_number(token + 2)) {
+                    throw_exception();
+                }
                 m = atoi(token + 2);
             }
+
+            token = strtok(NULL, " ");
+        }
+
+        int array[] = {m};
+        size_t size = sizeof(array) / sizeof(array[0]);
+
+        bool checkPositive = check_positive(array, size);
+        if (checkPositive) {
+            printf("m=%d\n", m);
+        } else {
+            throw_exception();
         }
         /**
          * TODO: get_a()
