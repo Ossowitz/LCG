@@ -1,1 +1,0 @@
-get_c cmin=10 m=2

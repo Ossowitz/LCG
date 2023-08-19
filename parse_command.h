@@ -42,11 +42,24 @@ void incorrect_command() {
     fclose(file);
 }
 
-bool check_numbers(int cmin, int cmax, int m) {
-    if (cmin > 0 && cmax > 0 && m > 0) {
-        return true;
+void throw_exception() {
+    FILE *file = fopen("output.txt", "w");
+    printf(EXCEPTION,
+           COMMAND_NOT_FOUND
+    );
+    fprintf(file,
+            COMMAND_NOT_FOUND
+    );
+    fclose(file);
+}
+
+bool check_positive(int *array, size_t size) {
+    for (int i = 0; i < size; i++) {
+        if (array[i] <= 0) {
+            return false;
+        }
     }
-    return false;
+    return true;
 }
 
 void parse_command(char *command) {
@@ -57,37 +70,17 @@ void parse_command(char *command) {
         while (token != NULL) {
             if (strncmp(token, "cmin=", 5) == 0) {
                 if (!is_positive_number(token + 5)) {
-                    FILE *file = fopen(OUTPUT_FILE, "w");
-                    printf(EXCEPTION,
-                           COMMAND_NOT_FOUND
-                    );
-                    fprintf(file,
-                            COMMAND_NOT_FOUND
-                    );
-                    fclose(file);
+                    throw_exception();
                 }
                 cmin = atoi(token + 5);
             } else if (strncmp(token, "cmax=", 5) == 0) {
                 if (!is_positive_number(token + 5)) {
-                    FILE *file = fopen("output.txt", "w");
-                    printf(EXCEPTION,
-                           COMMAND_NOT_FOUND
-                    );
-                    fprintf(file,
-                            "incorrect command");
-                    fclose(file);
+                    throw_exception();
                 }
                 cmax = atoi(token + 5);
             } else if (strncmp(token, "m=", 2) == 0) {
                 if (!is_positive_number(token + 2)) {
-                    FILE *file = fopen("output.txt", "w");
-                    printf(EXCEPTION,
-                           COMMAND_NOT_FOUND
-                    );
-                    fprintf(file,
-                            COMMAND_NOT_FOUND
-                    );
-                    fclose(file);
+                    throw_exception();
                 }
                 m = atoi(token + 2);
             }
@@ -95,16 +88,15 @@ void parse_command(char *command) {
             token = strtok(NULL, " ");
         }
 
-        if (check_numbers(cmin, cmax, m)) {
+        int array[3] = {cmin, cmax, m};
+        size_t size = sizeof(array) / sizeof(array[0]);
+
+        bool positive = check_positive(array, size);
+
+        if (positive) {
             printf("cmin=%d\ncmax=%d\nm=%d\n", cmin, cmax, m);
         } else {
-            FILE *file = fopen("output.txt", "w");
-            printf(EXCEPTION,
-                   COMMAND_NOT_FOUND
-            );
-            fprintf(file,
-                    COMMAND_NOT_FOUND
-            );
+            throw_exception();
         }
         return;
     }

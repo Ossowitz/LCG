@@ -1,0 +1,1 @@
+get_c cmin=10 cmax=20 m=2
