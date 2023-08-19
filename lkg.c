@@ -12,8 +12,10 @@
 #define OPEN_FILE_EXCEPTION "+ OPEN_FILE_EXCEPTION +"
 #define COMPLETED "+ COMPLETED +"
 
+#define INPUT_FILE "input.txt"
+
 int main() {
-    FILE *fp = fopen("input.txt", "r");
+    FILE *fp = fopen(INPUT_FILE, "r");
     if (fp != NULL) {
         char command[1000];
         if (fgets(command, sizeof(command), fp) != NULL) {
