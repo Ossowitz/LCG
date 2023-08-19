@@ -10,13 +10,17 @@
 #define STATELESS "\033[1;32m%s\033[0m\n"
 
 #define OPEN_FILE_EXCEPTION "+ OPEN_FILE_EXCEPTION +"
+
 #define COMPLETED "+ COMPLETED +"
+#define FILE_OPENED "+ FILE OPENED +"
 
 #define INPUT_FILE "input.txt"
 
 int main() {
     FILE *fp = fopen(INPUT_FILE, "r");
     if (fp != NULL) {
+        printf(STATELESS,
+               FILE_OPENED);
         char command[1000];
         if (fgets(command, sizeof(command), fp) != NULL) {
             parse_command(command);

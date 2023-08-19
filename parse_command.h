@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #define EXCEPTION "\033[1;31m%s\033[0m\n"
 
@@ -8,6 +9,19 @@
 
 #define OUTPUT_FILE "output.txt"
 
+int is_positive_number(const char *str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isdigit(str[i])) {
+            return 0;
+        }
+    }
+    int num = atoi(str);
+    if (num <= 0) {
+        return 0;
+    }
+    return 1;
+}
+
 void incorrect_command() {
     FILE *file;
 
@@ -15,7 +29,7 @@ void incorrect_command() {
 
     if (file == NULL) {
         printf(EXCEPTION,
-                OPEN_FILE_EXCEPTION
+               OPEN_FILE_EXCEPTION
         );
         return;
     }
@@ -29,23 +43,50 @@ void incorrect_command() {
 
 void parse_command(char *command) {
     char *token = strtok(command, " ");
+
     if (strcmp(token, "get_c") == 0) {
-        int cmin, cmax, m;
+        int cmin = -1, cmax = -1, m = -1;
         while (token != NULL) {
-            token = strtok(NULL, " ");
             if (strncmp(token, "cmin=", 5) == 0) {
+                if (!is_positive_number(token + 5)) {
+                    FILE *file = fopen(OUTPUT_FILE, "w");
+                    fprintf(file,
+                            COMMAND_NOT_FOUND
+                    );
+                    fclose(file);
+                }
                 cmin = atoi(token + 5);
             } else if (strncmp(token, "cmax=", 5) == 0) {
+                if (!is_positive_number(token + 5)) {
+                    FILE *file = fopen("output.txt", "w");
+                    fprintf(file,
+                            "incorrect command");
+                    fclose(file);
+                }
                 cmax = atoi(token + 5);
             } else if (strncmp(token, "m=", 2) == 0) {
+                if (!is_positive_number(token + 2)) {
+                    FILE *file = fopen("output.txt", "w");
+                    fprintf(file,
+                            COMMAND_NOT_FOUND
+                    );
+                    fclose(file);
+                }
                 m = atoi(token + 2);
             }
+
+            token = strtok(NULL, " ");
         }
+        printf("%d\n", cmin);
+        printf("%d\n", cmax);
+        printf("%d\n", m);
+        return;
+    }
         /**
          * TODO: get_c()
          */
 //        get_c(cmin, cmax, m);
-    } else if (strcmp(token, "get_a") == 0) {
+    else if (strcmp(token, "get_a") == 0) {
         int m;
         while (token != NULL) {
             token = strtok(NULL, " ");
