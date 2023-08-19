@@ -11,7 +11,7 @@
 
 #define OPEN_FILE_EXCEPTION "+ OPEN_FILE_EXCEPTION +"
 
-#define COMPLETED "+ COMPLETED +"
+#define COMPLETED "+ APPLICATION_COMPLETED +"
 #define FILE_OPENED "+ FILE OPENED +"
 
 #define INPUT_FILE "input.txt"

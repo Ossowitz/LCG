@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 #define EXCEPTION "\033[1;31m%s\033[0m\n"
 
@@ -41,6 +42,13 @@ void incorrect_command() {
     fclose(file);
 }
 
+bool check_numbers(int cmin, int cmax, int m) {
+    if (cmin > 0 && cmax > 0 && m > 0) {
+        return true;
+    }
+    return false;
+}
+
 void parse_command(char *command) {
     char *token = strtok(command, " ");
 
@@ -50,6 +58,9 @@ void parse_command(char *command) {
             if (strncmp(token, "cmin=", 5) == 0) {
                 if (!is_positive_number(token + 5)) {
                     FILE *file = fopen(OUTPUT_FILE, "w");
+                    printf(EXCEPTION,
+                           COMMAND_NOT_FOUND
+                    );
                     fprintf(file,
                             COMMAND_NOT_FOUND
                     );
@@ -59,6 +70,9 @@ void parse_command(char *command) {
             } else if (strncmp(token, "cmax=", 5) == 0) {
                 if (!is_positive_number(token + 5)) {
                     FILE *file = fopen("output.txt", "w");
+                    printf(EXCEPTION,
+                           COMMAND_NOT_FOUND
+                    );
                     fprintf(file,
                             "incorrect command");
                     fclose(file);
@@ -67,6 +81,9 @@ void parse_command(char *command) {
             } else if (strncmp(token, "m=", 2) == 0) {
                 if (!is_positive_number(token + 2)) {
                     FILE *file = fopen("output.txt", "w");
+                    printf(EXCEPTION,
+                           COMMAND_NOT_FOUND
+                    );
                     fprintf(file,
                             COMMAND_NOT_FOUND
                     );
@@ -77,9 +94,18 @@ void parse_command(char *command) {
 
             token = strtok(NULL, " ");
         }
-        printf("%d\n", cmin);
-        printf("%d\n", cmax);
-        printf("%d\n", m);
+
+        if (check_numbers(cmin, cmax, m)) {
+            printf("cmin=%d\ncmax=%d\nm=%d\n", cmin, cmax, m);
+        } else {
+            FILE *file = fopen("output.txt", "w");
+            printf(EXCEPTION,
+                   COMMAND_NOT_FOUND
+            );
+            fprintf(file,
+                    COMMAND_NOT_FOUND
+            );
+        }
         return;
     }
         /**
