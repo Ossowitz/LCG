@@ -16,7 +16,8 @@
 #define FILE_OPENED "+ FILE OPENED +"
 
 //#define INPUT_FILE "input_get_c.txt"
-#define INPUT_FILE "input_get_a.txt"
+//#define INPUT_FILE "input_get_a.txt"
+#define INPUT_FILE "input_lcg.txt"
 
 int main() {
     FILE *fp = fopen(INPUT_FILE, "r");

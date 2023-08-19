@@ -131,20 +131,46 @@ void parse_command(char *command) {
          */
 //        get_a(m);
     } else if (strcmp(token, "lcg") == 0) {
-        int a, x0, c, m, n;
+        int a = -1, x0 = -1, c = -1, m = -1, n = -1;
         while (token != NULL) {
-            token = strtok(NULL, " ");
             if (strncmp(token, "a=", 2) == 0) {
+                if (!is_positive_number(token + 2)) {
+                    throw_exception();
+                }
                 a = atoi(token + 2);
             } else if (strncmp(token, "x0=", 3) == 0) {
+                if (!is_positive_number(token + 3)) {
+                    throw_exception();
+                }
                 x0 = atoi(token + 3);
             } else if (strncmp(token, "c=", 2) == 0) {
+                if (!is_positive_number(token + 2)) {
+                    throw_exception();
+                }
                 c = atoi(token + 2);
             } else if (strncmp(token, "m=", 2) == 0) {
+                if (!is_positive_number(token + 2)) {
+                    throw_exception();
+                }
                 m = atoi(token + 2);
             } else if (strncmp(token, "n=", 2) == 0) {
+                if (!is_positive_number(token + 2)) {
+                    throw_exception();
+                }
                 n = atoi(token + 2);
             }
+
+            token = strtok(NULL, " ");
+        }
+
+        int array[] = {a, x0, c, m, n};
+        size_t size = sizeof(array) / sizeof(array[0]);
+
+        bool checkPositive = check_positive(array, size);
+        if (checkPositive) {
+            printf("a=%d\nx0=%d\nc=%d\nm=%d\nn=%d\n", a, x0, c, m, n);
+        } else {
+            throw_exception();
         }
         /**
          * TODO: lcg()
