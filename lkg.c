@@ -26,7 +26,7 @@ int main() {
                FILE_OPENED);
         char command[1000];
         if (fgets(command, sizeof(command), fp) != NULL) {
-            parse_command(command);
+            parseCommand(command);
         }
         fclose(fp);
         printf(STATELESS,

@@ -5,12 +5,13 @@
 
 #define EXCEPTION "\033[1;31m%s\033[0m\n"
 
-#define COMMAND_NOT_FOUND "incorrect command"
-#define OPEN_FILE_EXCEPTION "+ OPEN_FILE_EXCEPTION +"
+#define COMMAND_NOT_FOUND_EXCEPTION "incorrect command"
+#define OPEN_FILE_EXCEPTION         "+ OPEN_FILE_EXCEPTION +"
+#define EQUALS_ZERO_EXCEPTION       "no solution"
 
 #define OUTPUT_FILE "output.txt"
 
-int is_positive_number(const char *str) {
+int isPositiveNumber(const char *str) {
     for (int i = 0; str[i] != '\0'; i++) {
         if (!isdigit(str[i])) {
             return 0;
@@ -23,7 +24,7 @@ int is_positive_number(const char *str) {
     return 1;
 }
 
-void incorrect_command() {
+void incorrectCommand() {
     FILE *file;
 
     file = fopen(OUTPUT_FILE, "w");
@@ -36,24 +37,24 @@ void incorrect_command() {
     }
 
     fprintf(file,
-            COMMAND_NOT_FOUND
+            COMMAND_NOT_FOUND_EXCEPTION
     );
 
     fclose(file);
 }
 
-void throw_exception() {
+void throwException() {
     FILE *file = fopen("output.txt", "w");
     printf(EXCEPTION,
-           COMMAND_NOT_FOUND
+           COMMAND_NOT_FOUND_EXCEPTION
     );
     fprintf(file,
-            COMMAND_NOT_FOUND
+            COMMAND_NOT_FOUND_EXCEPTION
     );
     fclose(file);
 }
 
-bool check_positive(int *array, size_t size) {
+bool checkPositive(int *array, size_t size) {
     for (int i = 0; i < size; i++) {
         if (array[i] <= 0) {
             return false;
@@ -62,25 +63,40 @@ bool check_positive(int *array, size_t size) {
     return true;
 }
 
-void parse_command(char *command) {
+void throwEqualsZeroException(int i) {
+    if (i == 0) {
+        FILE *file = fopen("output.txt", "w");
+        printf(EXCEPTION,
+               EQUALS_ZERO_EXCEPTION
+        );
+        fprintf(file,
+                EQUALS_ZERO_EXCEPTION
+        );
+        fclose(file);
+    } else {
+        return;
+    }
+}
+
+void parseCommand(char *command) {
     char *token = strtok(command, " ");
 
     if (strcmp(token, "get_c") == 0) {
         int cmin = -1, cmax = -1, m = -1;
         while (token != NULL) {
             if (strncmp(token, "cmin=", 5) == 0) {
-                if (!is_positive_number(token + 5)) {
-                    throw_exception();
+                if (!isPositiveNumber(token + 5)) {
+                    throwException();
                 }
                 cmin = atoi(token + 5);
             } else if (strncmp(token, "cmax=", 5) == 0) {
-                if (!is_positive_number(token + 5)) {
-                    throw_exception();
+                if (!isPositiveNumber(token + 5)) {
+                    throwException();
                 }
                 cmax = atoi(token + 5);
             } else if (strncmp(token, "m=", 2) == 0) {
-                if (!is_positive_number(token + 2)) {
-                    throw_exception();
+                if (!isPositiveNumber(token + 2)) {
+                    throwException();
                 }
                 m = atoi(token + 2);
             }
@@ -91,12 +107,12 @@ void parse_command(char *command) {
         int array[] = {cmin, cmax, m};
         size_t size = sizeof(array) / sizeof(array[0]);
 
-        bool checkPositive = check_positive(array, size);
+        bool isCheckPositive = checkPositive(array, size);
 
-        if (checkPositive) {
+        if (isCheckPositive) {
             printf("cmin=%d\ncmax=%d\nm=%d\n", cmin, cmax, m);
         } else {
-            throw_exception();
+            throwException();
         }
         return;
     }
@@ -108,8 +124,8 @@ void parse_command(char *command) {
         int m = -1;
         while (token != NULL) {
             if (strncmp(token, "m=", 2) == 0) {
-                if (!is_positive_number(token + 2)) {
-                    throw_exception();
+                if (!isPositiveNumber(token + 2)) {
+                    throwException();
                 }
                 m = atoi(token + 2);
             }
@@ -120,11 +136,11 @@ void parse_command(char *command) {
         int array[] = {m};
         size_t size = sizeof(array) / sizeof(array[0]);
 
-        bool checkPositive = check_positive(array, size);
-        if (checkPositive) {
+        bool isCheckPositive = checkPositive(array, size);
+        if (isCheckPositive) {
             printf("m=%d\n", m);
         } else {
-            throw_exception();
+            throwException();
         }
         /**
          * TODO: get_a()
@@ -134,28 +150,28 @@ void parse_command(char *command) {
         int a = -1, x0 = -1, c = -1, m = -1, n = -1;
         while (token != NULL) {
             if (strncmp(token, "a=", 2) == 0) {
-                if (!is_positive_number(token + 2)) {
-                    throw_exception();
+                if (!isPositiveNumber(token + 2)) {
+                    throwException();
                 }
                 a = atoi(token + 2);
             } else if (strncmp(token, "x0=", 3) == 0) {
-                if (!is_positive_number(token + 3)) {
-                    throw_exception();
+                if (!isPositiveNumber(token + 3)) {
+                    throwException();
                 }
                 x0 = atoi(token + 3);
             } else if (strncmp(token, "c=", 2) == 0) {
-                if (!is_positive_number(token + 2)) {
-                    throw_exception();
+                if (!isPositiveNumber(token + 2)) {
+                    throwException();
                 }
                 c = atoi(token + 2);
             } else if (strncmp(token, "m=", 2) == 0) {
-                if (!is_positive_number(token + 2)) {
-                    throw_exception();
+                if (!isPositiveNumber(token + 2)) {
+                    throwException();
                 }
                 m = atoi(token + 2);
             } else if (strncmp(token, "n=", 2) == 0) {
-                if (!is_positive_number(token + 2)) {
-                    throw_exception();
+                if (!isPositiveNumber(token + 2)) {
+                    throwException();
                 }
                 n = atoi(token + 2);
             }
@@ -163,14 +179,17 @@ void parse_command(char *command) {
             token = strtok(NULL, " ");
         }
 
+        throwEqualsZeroException(n);
+
         int array[] = {a, x0, c, m, n};
         size_t size = sizeof(array) / sizeof(array[0]);
 
-        bool checkPositive = check_positive(array, size);
-        if (checkPositive) {
+        bool isCheckPositive = checkPositive(array, size);
+
+        if (isCheckPositive) {
             printf("a=%d\nx0=%d\nc=%d\nm=%d\nn=%d\n", a, x0, c, m, n);
         } else {
-            throw_exception();
+            throwException();
         }
         /**
          * TODO: lcg()
@@ -189,9 +208,9 @@ void parse_command(char *command) {
          */
 //        test(filename);
     } else {
-        incorrect_command();
+        incorrectCommand();
         printf(EXCEPTION,
-               COMMAND_NOT_FOUND
+               COMMAND_NOT_FOUND_EXCEPTION
         );
     }
 }
