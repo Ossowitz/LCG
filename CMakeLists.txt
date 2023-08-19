@@ -3,4 +3,4 @@ project(lkg C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_library(lkg lkg.c)
+add_library(lkg lkg.c parse_command.h)
