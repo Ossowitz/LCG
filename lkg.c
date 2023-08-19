@@ -17,7 +17,8 @@
 
 //#define INPUT_FILE "input_get_c.txt"
 //#define INPUT_FILE "input_get_a.txt"
-#define INPUT_FILE "input_lcg.txt"
+//#define INPUT_FILE "input_lcg.txt"
+#define INPUT_FILE "input_test.txt"
 
 int main() {
     FILE *fp = fopen(INPUT_FILE, "r");

@@ -196,12 +196,17 @@ void parseCommand(char *command) {
          */
 //        lcg(a, x0, c, m, n);
     } else if (strcmp(token, "test") == 0) {
-        char *filename;
+        char *filename = NULL;
         while (token != NULL) {
-            token = strtok(NULL, " ");
             if (strncmp(token, "inp=", 4) == 0) {
                 filename = token + 4;
             }
+            token = strtok(NULL, " ");
+        }
+        if (filename != NULL) {
+            printf("%s\n", filename);
+        } else {
+            throwException();
         }
         /**
          * TODO: test()
