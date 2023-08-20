@@ -48,6 +48,7 @@ void get_a(long long m) {
         );
     } else {
         fprintf(output,
-                "a = %lld", a + 1);
+                "a = %lld", a + 1
+        );
     }
 }

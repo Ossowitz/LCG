@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "../functions/get_c.h"
 #include "../functions/get_a.h"
+#include "../functions/lcg.h"
 
 #define EXCEPTION                   "\033[1;31m%s\033[0m\n"
 #define COMMAND_NOT_FOUND_EXCEPTION "incorrect command"
@@ -109,16 +110,12 @@ void parseCommand(char *command) {
 
         bool isCheckPositive = checkPositive(array, size);
 
-        if (isCheckPositive) {
-            printf("cmin=%d\ncmax=%d\nm=%d\n", cmin, cmax, m);
-        } else {
+        if (!isCheckPositive) {
             throwException();
         }
-
         get_c(cmin, cmax, m);
         return;
-    }
-    else if (strcmp(token, "get_a") == 0) {
+    } else if (strcmp(token, "get_a") == 0) {
         long long m = -1;
         while (token != NULL) {
             if (strncmp(token, "m=", 2) == 0) {
@@ -135,9 +132,7 @@ void parseCommand(char *command) {
         size_t size = sizeof(array) / sizeof(array[0]);
 
         bool isCheckPositive = checkPositive(array, size);
-        if (isCheckPositive) {
-            printf("m=%d\n", m);
-        } else {
+        if (!isCheckPositive) {
             throwException();
         }
         /**
@@ -184,15 +179,10 @@ void parseCommand(char *command) {
 
         bool isCheckPositive = checkPositive(array, size);
 
-        if (isCheckPositive) {
-            printf("a=%d\nx0=%d\nc=%d\nm=%d\nn=%d\n", a, x0, c, m, n);
-        } else {
+        if (!isCheckPositive) {
             throwException();
         }
-        /**
-         * TODO: lcg()
-         */
-//        lcg(a, x0, c, m, n);
+        lcg(a, x0, c, m, n);
     } else if (strcmp(token, "test") == 0) {
         char *filename = NULL;
         while (token != NULL) {
