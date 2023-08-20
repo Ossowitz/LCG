@@ -15,21 +15,21 @@
 #define COMPLETED   "+ APPLICATION_COMPLETED +"
 #define FILE_OPENED "+ FILE OPENED +"
 
-//#define INPUT_FILE "repository/input_get_c.txt"
+#define INPUT_FILE "repository/input_get_c.txt"
 //#define INPUT_FILE "repository/input_get_a.txt"
 //#define INPUT_FILE "repository/input_lcg.txt"
-#define INPUT_FILE "repository/input_test.txt"
+//#define INPUT_FILE "repository/input_test.txt"
 
 int main() {
-    FILE *fp = fopen(INPUT_FILE, "r");
-    if (fp != NULL) {
+    FILE *file = fopen(INPUT_FILE, "r");
+    if (file != NULL) {
         printf(STATELESS,
                FILE_OPENED);
         char command[1000];
-        if (fgets(command, sizeof(command), fp) != NULL) {
+        if (fgets(command, sizeof(command), file) != NULL) {
             parseCommand(command);
         }
-        fclose(fp);
+        fclose(file);
         printf(STATELESS,
                COMPLETED
         );

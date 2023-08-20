@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include "../functions/get_c.h"
 
 #define EXCEPTION "\033[1;31m%s\033[0m\n"
 
@@ -114,12 +115,9 @@ void parseCommand(char *command) {
         } else {
             throwException();
         }
+        get_c(cmin, cmax, m);
         return;
     }
-        /**
-         * TODO: get_c()
-         */
-//        get_c(cmin, cmax, m);
     else if (strcmp(token, "get_a") == 0) {
         int m = -1;
         while (token != NULL) {
