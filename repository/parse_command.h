@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include "../functions/get_c.h"
+#include "../functions/get_a.h"
 
 #define EXCEPTION                   "\033[1;31m%s\033[0m\n"
 #define COMMAND_NOT_FOUND_EXCEPTION "incorrect command"
@@ -142,7 +143,7 @@ void parseCommand(char *command) {
         /**
          * TODO: get_a()
          */
-//        get_a(m);
+        get_a(m);
     } else if (strcmp(token, "lcg") == 0) {
         long long a = -1, x0 = -1, c = -1, m = -1, n = -1;
         while (token != NULL) {

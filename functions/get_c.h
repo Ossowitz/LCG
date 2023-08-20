@@ -29,5 +29,6 @@ void get_c(long long cmin, long long cmax, long long m) {
         printf(EXCEPTION,
                OPEN_FILE_EXCEPTION
         );
+        return;
     }
 }
