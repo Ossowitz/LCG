@@ -5,6 +5,7 @@
 #include "../functions/get_c.h"
 #include "../functions/get_a.h"
 #include "../functions/lcg.h"
+#include "../functions/test.h"
 
 #define EXCEPTION                   "\033[1;31m%s\033[0m\n"
 #define COMMAND_NOT_FOUND_EXCEPTION "incorrect command"
@@ -26,9 +27,7 @@ long long isPositiveNumber(const char *str) {
 }
 
 void incorrectCommand() {
-    FILE *file;
-
-    file = fopen(OUTPUT_FILE, "w");
+    FILE *file = fopen(OUTPUT_FILE, "w");
 
     if (file == NULL) {
         printf(EXCEPTION,
@@ -193,10 +192,8 @@ void parseCommand(char *command) {
         } else {
             throwException();
         }
-        /**
-         * TODO: test()
-         */
-//        test(filename);
+
+        test(filename);
     } else {
         incorrectCommand();
         printf(EXCEPTION,

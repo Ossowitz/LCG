@@ -13,9 +13,9 @@
 #define COMPLETED           "+ APPLICATION_COMPLETED +"
 #define FILE_OPENED         "+ FILE OPENED +"
 //#define INPUT_FILE          "repository/input_get_c.txt"
-#define INPUT_FILE          "repository/input_get_a.txt"
+//#define INPUT_FILE          "repository/input_get_a.txt"
 //#define INPUT_FILE          "repository/input_lcg.txt"
-//#define INPUT_FILE          "repository/input_test.txt"
+#define INPUT_FILE          "repository/input_test.txt"
 
 int main() {
     FILE *file = fopen(INPUT_FILE, "r");
