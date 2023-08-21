@@ -4,11 +4,11 @@
 #define SEQUENCE_LENGTH 100000
 
 static long long m = 1 << 31;
+static long long a = 1103515245;
+static long long c = 12345;
 
 // Линейно-конгруэнтный генератор
 unsigned long lcg(long long seed) {
-    long long a = 1103515245;
-    long long c = 12345;
     return (a * seed + c) % m;
 }
 
@@ -59,7 +59,7 @@ void checkRandomness(long long sequence[], long long length) {
 }
 
 int main() {
-    long long seed = 123456789;  // Начальное значение для ЛКГ
+    long long seed = 1 << 31;  // Начальное значение для ЛКГ
     long long sequence[SEQUENCE_LENGTH];
 
     // Генерация последовательности чисел с помощью ЛКГ

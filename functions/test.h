@@ -17,6 +17,8 @@ void test(char *filename) {
 
         readFileToArray(file, capacity, array);
 
+
+
     } else {
         printf(EXCEPTION,
                OPEN_FILE_EXCEPTION
