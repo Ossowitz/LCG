@@ -135,9 +135,6 @@ void parseCommand(char *command) {
         if (!isCheckPositive) {
             throwException();
         }
-        /**
-         * TODO: get_a()
-         */
         get_a(m);
     } else if (strcmp(token, "lcg") == 0) {
         long long a = -1, x0 = -1, c = -1, m = -1, n = -1;
