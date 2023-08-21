@@ -3,4 +3,4 @@ project(lkg C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_library(lkg main/lkg.c repository/parse_command.h functions/get_c.h functions/get_a.h functions/lcg.h main/elk.c functions/test.h functions/gccLcg.h main/Log.cpp)
+add_library(lkg main/lkg.c repository/parse_command.h functions/get_c.h functions/get_a.h functions/lcg.h main/elk.c functions/test.h)

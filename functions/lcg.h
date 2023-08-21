@@ -4,7 +4,7 @@
 #define OPEN_FILE_EXCEPTION         "+ OPEN_FILE_EXCEPTION +"
 #define OUTPUT_FILE                 "output.txt"
 
-void lcg(long long a, long long x0, long long c, long long m, long long n) {
+void generateNum(long long a, long long x0, long long c, long long m, long long n) {
     FILE *output = fopen(OUTPUT_FILE, "w");
     long long xn = x0;
 

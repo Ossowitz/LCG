@@ -134,6 +134,7 @@ void parseCommand(char *command) {
         if (!isCheckPositive) {
             throwException();
         }
+
         get_a(m);
     } else if (strcmp(token, "lcg") == 0) {
         long long a = -1, x0 = -1, c = -1, m = -1, n = -1;
@@ -178,7 +179,8 @@ void parseCommand(char *command) {
         if (!isCheckPositive) {
             throwException();
         }
-        lcg(a, x0, c, m, n);
+
+        generateNum(a, x0, c, m, n);
     } else if (strcmp(token, "test") == 0) {
         char *filename = NULL;
         while (token != NULL) {
