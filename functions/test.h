@@ -5,23 +5,17 @@
 #define OPEN_FILE_EXCEPTION         "+ OPEN_FILE_EXCEPTION +"
 #define NO_SOLUTION_EXCEPTION       "no solution"
 
+void readFileToArray(FILE *file, long long capacity, long long int *array);
+
 void test(char *filename) {
     FILE *file = fopen(filename, "r");
 
     if (file != NULL) {
 
-        int capacity = 10;
-        int count = 0;
+        long long capacity = 10;
         long long *array = malloc(capacity * sizeof(long long));
 
-        long long num;
-        while (fscanf(file, "%lld", &num) == 1) {
-            if (count == capacity) {
-                capacity *= 2;
-                array = realloc(array, capacity * sizeof(long long));
-            }
-            array[count++] = num;
-        }
+        readFileToArray(file, capacity, array);
 
     } else {
         printf(EXCEPTION,
@@ -31,4 +25,16 @@ void test(char *filename) {
     }
 
     fclose(file);
+}
+
+void readFileToArray(FILE *file, long long capacity, long long int *array) {
+    long long num;
+    long long count = 0;
+    while (fscanf(file, "%lld", &num) == 1) {
+        if (count == capacity) {
+            capacity *= 2;
+            array = realloc(array, capacity * sizeof(long long));
+        }
+        array[count++] = num;
+    }
 }
