@@ -1,65 +1,82 @@
 #include <stdio.h>
+#include <math.h>
 
-#define SEQUENCE_LENGTH 1000
-#define WINDOW_LENGTH 1
+#define SEQUENCE_LENGTH 100000
 
-static unsigned long long m = 4294967296;
+static long long m = 1 << 31;
 
 // Линейно-конгруэнтный генератор
-unsigned long lcg(unsigned long seed) {
-    unsigned long a = 1664525;
-    unsigned long c = 1013904223;
+unsigned long lcg(long long seed) {
+    long long a = 1103515245;
+    long long c = 12345;
     return (a * seed + c) % m;
 }
 
-// Проверка последовательности на случайность с помощью критерия перестановок Дональда Кнута
-int checkRandomness(unsigned long sequence[], int length) {
-    int increasing = 0;
-    int decreasing = 0;
-    int extremes = 0;
+// Хи-квадрат
+double chiSquareTest(long long *observed, long long *expected, long long categories) {
+    double chiSquare = 0.0;
 
-    for (int i = WINDOW_LENGTH; i < length; i++) {
-        int current = sequence[i];
-        int previous = sequence[i - 1];
+    for (long long i = 0; i < categories; i++) {
+        chiSquare += pow(observed[i] - expected[i], 2) / expected[i];
+    }
+
+    return chiSquare;
+}
+
+// Проверка последовательности на случайность с помощью критерия перестановок Дональда Кнута
+void checkRandomness(long long sequence[], long long length) {
+    long long increasing = 0;
+    long long decreasing = 0;
+
+    for (long long i = 1; i < length + 1; i += 2) {
+        long long current = sequence[i];
+        long long previous = sequence[i - 1];
         if (current > previous) {
             increasing++;
         } else if (current < previous) {
             decreasing++;
         }
-
-        if (current == 0 || current == m - 1) {
-            extremes++;
-        }
     }
 
-    printf("increasing: %d\n", increasing);
-    printf("decreasing: %d\n", decreasing);
-    printf("extremes: %d\n", extremes);
+    printf("increasing: %lld\n", increasing);
+    printf("decreasing: %lld\n", decreasing);
 
-    if (increasing == decreasing && extremes > 0) {
-        return 1;  // Последовательность прошла проверку на случайность
-    } else {
-        return 0;  // Последовательность не прошла проверку на случайность
-    }
+    long long observed[] = {increasing, decreasing};
+    long long expected[] = {
+            SEQUENCE_LENGTH / 4,
+            SEQUENCE_LENGTH / 4
+    };
+
+    double squareTest = chiSquareTest(observed, expected, 2);
+
+    printf("%f", squareTest);
+
+//    if (increasing == decreasing) {
+//        return 1;  // Последовательность прошла проверку на случайность
+//    } else {
+//        return 0;  // Последовательность не прошла проверку на случайность
+//    }
 }
 
 int main() {
-    unsigned long seed = 123456789;  // Начальное значение для ЛКГ
-    unsigned long sequence[SEQUENCE_LENGTH];
+    long long seed = 123456789;  // Начальное значение для ЛКГ
+    long long sequence[SEQUENCE_LENGTH];
 
     // Генерация последовательности чисел с помощью ЛКГ
-    for (int i = 0; i < SEQUENCE_LENGTH; i++) {
+    for (long long i = 0; i < SEQUENCE_LENGTH; i++) {
         seed = lcg(seed);
         sequence[i] = seed;
     }
 
+    checkRandomness(sequence, SEQUENCE_LENGTH);
+
     // Проверка случайности последовательности
-    int isRandom = checkRandomness(sequence, SEQUENCE_LENGTH);
-    if (isRandom) {
-        printf("RANDOM\n");
-    } else {
-        printf("NOT_RANDOM\n");
-    }
+//    long long isRandom = checkRandomness(sequence, SEQUENCE_LENGTH);
+//    if (isRandom) {
+//        printf("RANDOM\n");
+//    } else {
+//        printf("NOT_RANDOM\n");
+//    }
 
     return 0;
 }
