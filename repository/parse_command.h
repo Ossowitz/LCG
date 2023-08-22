@@ -1,3 +1,9 @@
+/**
+ * @author: https://github.com/Ossowitz
+ * @author: https://t.me/DispatcherServlet
+ * TODO: implementation LKG
+ */
+
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -13,6 +19,10 @@
 #define NO_SOLUTION_EXCEPTION       "no solution"
 #define OUTPUT_FILE                 "output.txt"
 
+/**
+ * @param:  str - Number represented as a string
+ * @return: This function checks if the given string is a positive number.
+ */
 long long isPositiveNumber(const char *str) {
     for (long long i = 0; str[i] != '\0'; i++) {
         if (!isdigit(str[i])) {
@@ -26,20 +36,20 @@ long long isPositiveNumber(const char *str) {
     return 1;
 }
 
+/**
+ * @note Function for throwing an exception associated with a file opening error.
+ */
 void incorrectCommand() {
     FILE *file = fopen(OUTPUT_FILE, "w");
-
     if (file == NULL) {
         printf(EXCEPTION,
                OPEN_FILE_EXCEPTION
         );
         return;
     }
-
     fprintf(file,
             COMMAND_NOT_FOUND_EXCEPTION
     );
-
     fclose(file);
 }
 
@@ -54,6 +64,11 @@ void throwException() {
     fclose(file);
 }
 
+/**
+ * @param:  array - numeric array
+ * @param:  size  - size about numeric array
+ * @return: This function checks if all elements of array are positive numbers.
+ */
 bool checkPositive(long long *array, size_t size) {
     for (long long i = 0; i < size; i++) {
         if (array[i] <= 0) {
@@ -63,6 +78,15 @@ bool checkPositive(long long *array, size_t size) {
     return true;
 }
 
+/**
+ * @param: n  - numeric
+ * @param: a  - numeric
+ * @param: c  - numeric
+ * @param: x0 - numeric
+ * @param: m  - numeric
+ * @note:  0 <= a,x0,c,m,n      a,x0,c < m
+ * @note:  This function is needed to validate input parameters.
+ */
 void checkCompatibility(long long n, long long a, long long c, long long x0, long long m) {
     if (n == 0 || a >= m || c >= m || x0 >= m) {
         FILE *file = fopen("output.txt", "w");
@@ -78,6 +102,10 @@ void checkCompatibility(long long n, long long a, long long c, long long x0, lon
     }
 }
 
+/**
+ * @param: command - Command that separates arguments
+ * @note:  The call of a specific function depends on the value of the command.
+ */
 void parseCommand(char *command) {
     char *token = strtok(command, " ");
 
@@ -100,7 +128,6 @@ void parseCommand(char *command) {
                 }
                 m = atoi(token + 2);
             }
-
             token = strtok(NULL, " ");
         }
 
@@ -108,12 +135,10 @@ void parseCommand(char *command) {
         size_t size = sizeof(array) / sizeof(array[0]);
 
         bool isCheckPositive = checkPositive(array, size);
-
         if (!isCheckPositive) {
             throwException();
         }
         get_c(cmin, cmax, m);
-        return;
     } else if (strcmp(token, "get_a") == 0) {
         long long m = -1;
         while (token != NULL) {
@@ -123,7 +148,6 @@ void parseCommand(char *command) {
                 }
                 m = atoi(token + 2);
             }
-
             token = strtok(NULL, " ");
         }
 
@@ -134,7 +158,6 @@ void parseCommand(char *command) {
         if (!isCheckPositive) {
             throwException();
         }
-
         get_a(m);
     } else if (strcmp(token, "lcg") == 0) {
         long long a = -1, x0 = -1, c = -1, m = -1, n = -1;
@@ -165,7 +188,6 @@ void parseCommand(char *command) {
                 }
                 n = atoi(token + 2);
             }
-
             token = strtok(NULL, " ");
         }
 
@@ -175,11 +197,9 @@ void parseCommand(char *command) {
         size_t size = sizeof(array) / sizeof(array[0]);
 
         bool isCheckPositive = checkPositive(array, size);
-
         if (!isCheckPositive) {
             throwException();
         }
-
         generateNum(a, x0, c, m, n);
     } else if (strcmp(token, "test") == 0) {
         char *filename = NULL;
@@ -194,7 +214,6 @@ void parseCommand(char *command) {
         } else {
             throwException();
         }
-
         test(filename);
     } else {
         incorrectCommand();
