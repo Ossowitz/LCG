@@ -14,7 +14,7 @@
  *
  * @param   a - numeric
  * @param   b - numeric
- * @return: Finding the least common divisor
+ * @return: Finding the least common divisor.
  * @see:   https://www.youtube.com/watch?v=cn2geFx5xAI
  */
 long long areCoprime(long long a, long long b) {
@@ -28,7 +28,7 @@ long long areCoprime(long long a, long long b) {
  * @param cmin - numeric
  * @param cmax - numeric
  * @param m    - numeric
- * @note  Pick up all c relatively prime to m, 0 < c < m, cmin <= c <= cmax
+ * @note  Pick up all c relatively prime to m, 0 < c < m, cmin <= c <= cmax.
  */
 void get_c(long long cmin, long long cmax, long long m) {
     FILE *file = fopen(OUTPUT_FILE, "w");
