@@ -1,3 +1,10 @@
+/**
+ * @author:  https://github.com/Ossowitz
+ * @author:  https://t.me/DispatcherServlet
+ * @version: 1.0
+ * TODO: implementation LKG
+ */
+
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
@@ -9,6 +16,11 @@
 #define FILE_OPENED                 "+ FILE OPENED +"
 #define OUTPUT_FILE                 "output.txt"
 
+/**
+ * @param:  n - numeric
+ * @return: Checking whether a number is prime
+ * @see:    https://habr.com/ru/articles/205318/
+ */
 bool isPrime(long long n) {
     if (n > 1) {
         for (long long i = 2; i < n; i++) {
@@ -22,6 +34,11 @@ bool isPrime(long long n) {
     }
 }
 
+/**
+ * @param: m - numeric
+ * @note:  Find the minimum a such that a-1 is divisible by all prime divisors of m.\note
+ *          If m is divisible by 4 then a-1 is divisible by 4;
+ */
 void get_a(long long m) {
     FILE *output = fopen(OUTPUT_FILE, "w");
     long long a = 0;

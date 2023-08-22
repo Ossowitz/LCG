@@ -1,3 +1,10 @@
+/**
+ * @author:  https://github.com/Ossowitz
+ * @author:  https://t.me/DispatcherServlet
+ * @version: 1.0
+ * TODO: implementation LKG
+ */
+
 #include <stdio.h>
 
 #define EXCEPTION                   "\033[1;31m%s\033[0m\n"
@@ -12,11 +19,21 @@ static long long m = 1 << 31;
 static long long a = 1103515245;
 static long long c = 12345;
 
-// https://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D0%BD%D0%B5%D0%B9%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D0%BD%D0%B3%D1%80%D1%83%D1%8D%D0%BD%D1%82%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4#:~:text=glibc%20(-,used%20by,-GCC)%5B10
+/**
+ * @param:  seed - numeric, initial value in LKG
+ * @return: pseudo-random number
+ * @note:   https://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D0%BD%D0%B5%D0%B9%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D0%BD%D0%B3%D1%80%D1%83%D1%8D%D0%BD%D1%82%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4#:~:text=glibc%20(-,used%20by,-GCC)%5B10
+ */
 long long glibcGeneratorByGcc(long long seed) {
     return (a * seed + c) % m;
 }
 
+/**
+ * @param: filename - file to which the entire sequence will be written
+ * @note: Use this method call if there is no sequence in the file yet.\note
+ *          LKG - source: glibc (used by GCC)
+ * @see:  https://ru.wikipedia.org/wiki/%D0%9B%D0%B8%D0%BD%D0%B5%D0%B9%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D0%BD%D0%B3%D1%80%D1%83%D1%8D%D0%BD%D1%82%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4#:~:text=glibc%20(-,used%20by,-GCC)%5B10
+ */
 void lcgWriteToFile(char *filename) {
     FILE *file = fopen(filename, "w");
 
@@ -42,8 +59,26 @@ void lcgWriteToFile(char *filename) {
     fclose(file);
 }
 
-void readFileToArray(FILE *file, long long int *array);
+/**
+ * @param: file  - file containing the sequence
+ * @param: array - an array to hold the sequence
+ */
+void readFileToArray(FILE *file, long long int *array) {
+    long long num;
+    long long count = 0;
+    while (fscanf(file, "%lld", &num) == 1) {
+        array[count++] = num;
+    }
+}
 
+/**
+ * @param: observed     - this array contains the number of descending and the number of non-decreasing\note
+ *      For example: {491, 509} or {242, 258}
+ * @param: expected     - this array contains the real situation of decreasing and non-decreasing\note
+ *      Always:      {500, 500} or {250, 250}
+ * @param: categories   - this is how many numbers are in the subgroup
+ * @return: chi-square (or xi :) )
+ */
 double chiSquareTest(long long *observed, long long *expected, long long categories) {
     double chiSquare = 0.0;
     for (long long i = 0; i < categories; i++) {
@@ -52,6 +87,11 @@ double chiSquareTest(long long *observed, long long *expected, long long categor
     return chiSquare;
 }
 
+/**
+ * @param:   squareTest - chi-square that we calculated in the last function
+ * @return:  a line with a message in which gap we are
+ * @see:     http://kontromat.ru/?page_id=4200
+ */
 char *findBorders(double squareTest) {
     double grade1   = 0.02010;
     double grade5   = 0.1026;
@@ -61,7 +101,6 @@ char *findBorders(double squareTest) {
     double grade95  = 5.991;
     double grade99  = 9.210;
 
-    //http://kontromat.ru/?page_id=4200
     if (squareTest < grade1 || squareTest > grade99) {
         return NULL;
     } else if (squareTest > grade1 && squareTest < grade5) {
@@ -79,6 +118,10 @@ char *findBorders(double squareTest) {
     }
 }
 
+/**
+ * @param: squareTest - chi-square that we calculated in the last function
+ * @note:  write the result of the chi-square calculation to a file
+ */
 void writeChiSquareResult(double squareTest) {
     FILE *output = fopen(OUTPUT_FILE, "w");
     char *borders = findBorders(squareTest);
@@ -98,6 +141,18 @@ void writeChiSquareResult(double squareTest) {
     }
 }
 
+/**
+ * @param: sequence - numeric array
+ * @param: length   - length of array
+ * @note:  {
+ *               The principle of testing the generated sequence for randomness
+ *                   using the Donald Knuth permutation criterion is as follows:
+ *
+ *               1.
+ *
+ *         }
+ * @see: https://github.com/Ossowitz/LCG#readme
+ */
 void checkRandomness(long long sequence[], long long length) {
     long long increasing = 0;
     long long decreasing = 0;
@@ -126,7 +181,13 @@ void checkRandomness(long long sequence[], long long length) {
     writeChiSquareResult(squareTest);
 }
 
+/**
+ * @param: filename - the file from which we will get the numbers.
+ */
 void test(char *filename) {
+    /**
+     * @note: Use this method call if there is no sequence in the file yet!
+     */
     lcgWriteToFile(filename);
 
     FILE *file = fopen(filename, "r");
@@ -143,12 +204,4 @@ void test(char *filename) {
         return;
     }
     fclose(file);
-}
-
-void readFileToArray(FILE *file, long long int *array) {
-    long long num;
-    long long count = 0;
-    while (fscanf(file, "%lld", &num) == 1) {
-        array[count++] = num;
-    }
 }

@@ -1,6 +1,7 @@
 /**
- * @author: https://github.com/Ossowitz
- * @author: https://t.me/DispatcherServlet
+ * @author:  https://github.com/Ossowitz
+ * @author:  https://t.me/DispatcherServlet
+ * @version: 1.0
  * TODO: implementation LKG
  */
 
@@ -37,7 +38,7 @@ long long isPositiveNumber(const char *str) {
 }
 
 /**
- * @note Function for throwing an exception associated with a file opening error.
+ * @note: Function for throwing an exception associated with a file opening error.
  */
 void incorrectCommand() {
     FILE *file = fopen(OUTPUT_FILE, "w");
@@ -53,6 +54,9 @@ void incorrectCommand() {
     fclose(file);
 }
 
+/**
+ * note: A function to throw an exception if no solution is found.
+ */
 void throwException() {
     FILE *file = fopen("output.txt", "w");
     printf(EXCEPTION,

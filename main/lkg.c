@@ -1,6 +1,7 @@
 /**
- * @author: https://github.com/Ossowitz
- * @author: https://t.me/DispatcherServlet
+ * @author:  https://github.com/Ossowitz
+ * @author:  https://t.me/DispatcherServlet
+ * @version: 1.0
  * TODO: implementation LKG
  */
 
