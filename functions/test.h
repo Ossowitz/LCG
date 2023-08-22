@@ -4,8 +4,9 @@
 #define COMMAND_NOT_FOUND_EXCEPTION "incorrect command"
 #define OPEN_FILE_EXCEPTION         "+ OPEN_FILE_EXCEPTION +"
 #define NO_SOLUTION_EXCEPTION       "no solution"
+#define OUTPUT_FILE                 "output.txt"
 
-#define SEQUENCE_LENGTH 10000
+#define SEQUENCE_LENGTH 1000
 
 static long long m = 1 << 31;
 static long long a = 1103515245;
@@ -45,12 +46,56 @@ void readFileToArray(FILE *file, long long int *array);
 
 double chiSquareTest(long long *observed, long long *expected, long long categories) {
     double chiSquare = 0.0;
-
     for (long long i = 0; i < categories; i++) {
         chiSquare += pow(observed[i] - expected[i], 2) / expected[i];
     }
-
     return chiSquare;
+}
+
+char *findBorders(double squareTest) {
+    double grade1   = 0.02010;
+    double grade5   = 0.1026;
+    double grade25  = 0.5754;
+    double grade50  = 1.386;
+    double grade75  = 2.773;
+    double grade95  = 5.991;
+    double grade99  = 9.210;
+
+    //http://kontromat.ru/?page_id=4200
+    if (squareTest < grade1 || squareTest > grade99) {
+        return NULL;
+    } else if (squareTest > grade1 && squareTest < grade5) {
+        return "The sequence is not random. Xi-square between 1% - 5%";
+    } else if (squareTest > grade5 && squareTest < grade25) {
+        return "The sequence is random. Xi-square between 5% - 25%";
+    } else if (squareTest > grade25 && squareTest < grade50) {
+        return "The sequence is random. Xi-square between 25% - 50%";
+    } else if (squareTest > grade50 && squareTest < grade75) {
+        return "The sequence is random. Xi-square between 50% - 75%";
+    } else if (squareTest > grade75 && squareTest < grade95) {
+        return "The sequence is random. Xi-square between 75% - 95%";
+    } else if (squareTest > grade95 && squareTest < grade99) {
+        return "The sequence is random. Xi-square between 95% - 99%";
+    }
+}
+
+void writeChiSquareResult(double squareTest) {
+    FILE *output = fopen(OUTPUT_FILE, "w");
+    char *borders = findBorders(squareTest);
+    if (output != NULL) {
+        fprintf(output,
+                "%f\n%s",
+                squareTest, borders
+        );
+
+        printf("%f\n", squareTest);
+        printf("%s\n", borders);
+    } else {
+        printf(EXCEPTION,
+               OPEN_FILE_EXCEPTION
+        );
+        return;
+    }
 }
 
 void checkRandomness(long long sequence[], long long length) {
@@ -78,7 +123,7 @@ void checkRandomness(long long sequence[], long long length) {
 
     double squareTest = chiSquareTest(observed, expected, 2);
 
-    printf("%f\n", squareTest);
+    writeChiSquareResult(squareTest);
 }
 
 void test(char *filename) {
