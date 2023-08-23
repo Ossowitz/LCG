@@ -26,7 +26,8 @@ int main() {
     FILE *file = fopen(INPUT_FILE, "r");
     if (file != NULL) {
         printf(STATELESS,
-               FILE_OPENED);
+               FILE_OPENED
+        );
         char command[1000];
         if (fgets(command, sizeof(command), file) != NULL) {
             parseCommand(command);
