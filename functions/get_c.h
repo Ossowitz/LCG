@@ -18,7 +18,7 @@
  * @return:  Finding the least common divisor.
  * @see:     https://www.youtube.com/watch?v=cn2geFx5xAI
  */
-long long areCoprime(long long a, long long b) {
+unsigned long long areCoprime(unsigned long long a, unsigned long long b) {
     if (b == 0) {
         return a == 1;
     }
@@ -31,10 +31,10 @@ long long areCoprime(long long a, long long b) {
  * @param: m    - numeric
  * @brief: Pick up all c relatively prime to m, 0 < c < m, cmin <= c <= cmax.
  */
-void get_c(long long cmin, long long cmax, long long m) {
+void get_c(unsigned long long cmin, unsigned long long cmax, unsigned long long m) {
     FILE *file = fopen(OUTPUT_FILE, "w");
     if (file != NULL) {
-        for (long long c = cmin; c <= cmax; c++) {
+        for (unsigned long long c = cmin; c <= cmax; c++) {
             if (c > 0 && c < m && areCoprime(c, m)) {
                 fprintf(file, "%d\n", c);
                 printf("%d\n", c);

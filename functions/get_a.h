@@ -21,9 +21,9 @@
  * @return: Checking whether a number is prime
  * @see:    https://habr.com/ru/articles/205318/
  */
-bool isPrime(long long n) {
+bool isPrime(unsigned long long n) {
     if (n > 1) {
-        for (long long i = 2; i <= sqrt(n); i++) {
+        for (unsigned long long i = 2; i <= sqrt(n); i++) {
             if (n % i == 0) {
                 return false;
             }
@@ -39,7 +39,7 @@ bool isPrime(long long n) {
  * @brief: Find the minimum a such that a-1 is divisible by all prime divisors of m.\note
  *          If m is divisible by 4 then a-1 is divisible by 4;
  */
-void get_a(long long m) {
+void get_a(unsigned long long m) {
     FILE *output = fopen(OUTPUT_FILE, "w");
     long long a = 0;
     if (output == NULL) {
@@ -54,7 +54,7 @@ void get_a(long long m) {
     if (m % 4 == 0) {
         a = 4;
     }
-    for (int j = 3; j < sqrt(m); j += 2) {
+    for (unsigned long long j = 3; j < sqrt(m); j += 2) {
         if ((m % j == 0) && (isPrime(j) == true)) {
             a *= j;
         }

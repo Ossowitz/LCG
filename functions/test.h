@@ -6,6 +6,7 @@
  */
 
 #include <stdio.h>
+#include "math.h"
 
 #define EXCEPTION                   "\033[1;31m%s\033[0m\n"
 #define COMMAND_NOT_FOUND_EXCEPTION "incorrect command"
@@ -93,16 +94,16 @@ double chiSquareTest(long long *observed, long long *expected, long long categor
  * @see:     http://kontromat.ru/?page_id=4200
  */
 char *findBorders(double squareTest) {
-    double grade1   = 0.02010;
-    double grade5   = 0.1026;
-    double grade25  = 0.5754;
-    double grade50  = 1.386;
-    double grade75  = 2.773;
-    double grade95  = 5.991;
-    double grade99  = 9.210;
+    double grade1  = 0.02010;
+    double grade5  = 0.1026;
+    double grade25 = 0.5754;
+    double grade50 = 1.386;
+    double grade75 = 2.773;
+    double grade95 = 5.991;
+    double grade99 = 9.210;
 
-    if (squareTest < grade1 || squareTest > grade99) {
-        return NULL;
+    if (squareTest < grade1 || squareTest > grade99 || squareTest == INFINITY || squareTest == 0) {
+        return "The sequence is not random. Observed and expected too different!";
     } else if (squareTest > grade1 && squareTest < grade5) {
         return "The sequence is not random. Xi-square between 1% - 5%";
     } else if (squareTest > grade5 && squareTest < grade25) {
@@ -181,7 +182,7 @@ void test(char *filename) {
     /**
      * @note: Use this method call if there is no sequence in the file yet!
      */
-    lcgWriteToFile(filename);
+//    lcgWriteToFile(filename);
 
     FILE *file = fopen(filename, "r");
     if (file != NULL) {
