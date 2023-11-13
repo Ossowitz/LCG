@@ -182,7 +182,7 @@ void test(char *filename) {
     /**
      * @note: Use this method call if there is no sequence in the file yet!
      */
-//    lcgWriteToFile(filename);
+    lcgWriteToFile(filename);
 
     FILE *file = fopen(filename, "r");
     if (file != NULL) {

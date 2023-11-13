@@ -41,7 +41,7 @@ bool isPrime(unsigned long long n) {
  */
 void get_a(unsigned long long m) {
     FILE *output = fopen(OUTPUT_FILE, "w");
-    long long a = 0;
+    unsigned long long a = 0;
     if (output == NULL) {
         printf(EXCEPTION,
                OPEN_FILE_EXCEPTION

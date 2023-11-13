@@ -17,9 +17,9 @@
 /**
  * @brief: Depending on the choice of command, uncomment the specific line.
  */
-#define INPUT_FILE          "repository/input_get_c.txt"
+//#define INPUT_FILE          "repository/input_get_c.txt"
 //#define INPUT_FILE            "repository/input_get_a.txt"
-//#define INPUT_FILE          "repository/input_lcg.txt"
+#define INPUT_FILE          "repository/input_lcg.txt"
 //#define INPUT_FILE          "repository/input_test.txt"
 
 int main() {
